@@ -1,7 +1,8 @@
 Starkups
 ========
 
-A lightweight markup language for journals.
+A lightweight markup language for journals.  
+<http://starkups.s.zeid.me/>
 
 Copyright (c) 2015 [Scott Zeid](https://s.zeid.me/).  
 Released under [the X11 License](https://tldrlegal.com/l/x11).
