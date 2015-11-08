@@ -1,0 +1,49 @@
+#!/usr/bin/env python2
+
+import os
+import sys
+
+ROOT = os.path.dirname(os.path.realpath(__file__))
+VIEWER = os.path.join(ROOT, "index.html");
+
+STATIC_NAME_PLACEHOLDER = "__SKP"+"_"+"INSERT_NAME_HERE__"
+STATIC_DATA_PLACEHOLDER = "__SKP"+"_"+"INSERT_DATA_HERE__"
+
+
+def html_escape(s, quote=True):
+ s = s.replace("&", "&amp;")
+ s = s.replace("<", "&lt;")
+ s = s.replace(">", "&gt;")
+ if quote:
+  s = s.replace("'", "&#39;")
+  s = s.replace('"', "&quot;")
+ return s
+
+
+def main(argv):
+ if len(argv) < 2:
+  print >> sys.stderr, "Usage: %s <filename|->" % argv[0]
+  return 2
+ 
+ path = name = argv[1]
+ if path == "-":
+  skp = sys.stdin.read()
+ else:
+  name = os.path.basename(path)
+  with open(path, "rb") as f:
+   skp = f.read()
+ 
+ with open(VIEWER, "rb") as f:
+  html = f.read()
+ 
+ html = html.replace(STATIC_NAME_PLACEHOLDER, html_escape(name))
+ html = html.replace(STATIC_DATA_PLACEHOLDER, html_escape(skp, False))
+ 
+ sys.stdout.write(html)
+
+
+if __name__ == "__main__":
+ try:
+  sys.exit(main(sys.argv))
+ except KeyboardInterrupt:
+  pass

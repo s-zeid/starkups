@@ -1,0 +1,23 @@
+{
+  "name": "starkups.js",
+  "version": "0.1.0",
+  "description": "Starbucks-inspired journal markup language",
+  "main": "starkups.js",
+  "directories": {},
+  "scripts": {
+    "build": "make",
+    "test": "./test"
+  },
+  "author": "Scott Zeid",
+  "license": "X11",
+  "repository": "bitbucket:scottywz/starkups",
+  "dependencies": {
+    "jquery": "^2.1.4",
+    "markdown": "^0.5.0",
+    "material-design-lite": "^1.0.6"
+  },
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "vulcanize": "^1.14.0"
+  }
+}

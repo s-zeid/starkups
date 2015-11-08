@@ -1,0 +1,86 @@
+html, body {
+ font-family: "Roboto", "Droid Sans", "Arial", "Helvetica", sans-serif;
+}
+
+.skp-subtitle {
+ font-size: medium;
+ display: inline-block;
+}
+
+@media (max-width: 839px) {
+ .skp-buttons a span {
+  display: none;
+ }
+ .skp-buttons a + a {
+  padding-left: 0;
+ }
+}
+
+.skp-main {
+ margin: 0 8px;
+}
+
+.skp-main > .mdl-cell {
+ margin-left: auto; margin-right: auto;
+}
+
+.skp-main .mdl-card {
+ min-height: 0;
+}
+
+.skp-main .mdl-card__title > * {
+ margin: 0;
+}
+
+.skp-main .mdl-card__supporting-text p,
+.skp-main .mdl-card__supporting-text pre {
+ margin: 0;
+}
+
+.skp-main .mdl-card__supporting-text * + p,
+.skp-main .mdl-card__supporting-text * + pre {
+ margin-top: 1em;
+}
+
+.skp-templates {
+ display: none;
+}
+
+.skp-item.important .skp-heading {
+ font-weight: bold;
+}
+
+.skp-slug + .skp-summary > :first-child {
+ padding-left: 2em;
+}
+
+.skp-body {
+ padding-top: 0;
+}
+
+.skp-body:empty {
+ padding-bottom: 0;
+}
+
+.skp-body img {
+ max-width: 100%;
+}
+
+.skp-body pre, .skp-body code {
+ background: #F5F5F5;
+ padding: 0.5em;
+}
+
+.skp-body pre {
+ position: relative; top: -0.5em; left: -0.5em;
+ white-space: pre-wrap;
+}
+
+.skp-body pre > code {
+ background: transparent;
+ padding: 0;
+}
+
+.skp-file, .skp-default {
+ display: none;
+}

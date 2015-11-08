@@ -1,0 +1,132 @@
+<!DOCTYPE html><!-- vim: set fdm=marker: -->
+
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>Starkups Viewer</title>
+  <meta name="viewport" content="width=device-width; minimum-scale=1.0; initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto" />
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" type="text/css" href="../mdlite/material.min.css" />
+  <link rel="stylesheet" type="text/css" href="viewer.css" />
+  <script type="text/javascript" class="start-crap-trap">void 0;</script>
+  <script type="text/javascript" class="end-crap-trap">void 0;</script>
+  <script type="text/javascript" src="../mdlite/material.min.js"></script>
+  <script type="text/javascript" class="start-crap-trap">void 0;</script>
+ </head>
+ <body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-base mdl-color--grey-100 mdl-color-text--grey-700 skp-root">
+   <header class="mdl-layout__header is-casting-shadow skp-heading">
+    <!-- Top row, always visible -->
+    <div class="mdl-layout__header-row">
+     <!-- Title -->
+     <div class="mdl-layout-title skp-title"></div>
+     <div class="mdl-layout-spacer"></div>
+    </div>
+    <!-- Bottom row, not visible on scroll -->
+    <div class="mdl-layout__header-row mdl-color--primary-dark skp-toolbar">
+     <div class="skp-subtitle"></div>
+     <div class="mdl-layout-spacer"></div>
+     <!-- Navigation -->
+     <nav class="mdl-navigation skp-buttons">
+      <a class="mdl-navigation__link mdl-navigation__link--icon mdl-js-ripple-effect
+                skp-open" href="#" title="Open">
+       <button class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">folder_open</i>
+       </button>
+       <span>Open</span>
+      </a>
+      <a class="mdl-navigation__link mdl-navigation__link--icon mdl-js-ripple-effect
+                skp-save" href="#" title="Save as HTML">
+       <button class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">save</i>
+       </button>
+       <span>Save as HTML</span>
+      </a>
+     </nav>
+    </div>
+   </header>
+   <div class="mdl-layout__content skp-scrollable">
+    <main class="mdl-grid skp-main skp-empty"></main>
+   </div>
+   <div class="skp-templates">
+    <div class="mdl-card mdl-cell mdl-cell--9-col mdl-cell--4-col-phone mdl-shadow--2dp
+                skp-item">
+     <div class="mdl-card__title skp-heading">
+      <span class="skp-slug"></span>
+      <span class="skp-summary"></span>
+     </div>
+     <div class="mdl-card__supporting-text skp-body"></div>
+    </div>
+   </div>
+   <pre class="skp-file" title="__SKP_INSERT_NAME_HERE__">__SKP_INSERT_DATA_HERE__</pre>
+   <pre class="skp-default">
+Starkups
+To get started, open a file.
+
+
+What is Starkups?
+
+Starkups is a lightweight markup language for journals.
+
+
+What does it look like?
+
+It looks like this:
+
+    Title
+    Subtitle
+    
+    
+    Entry 1	(that's a tab stop) Name of entry
+    **Lorem ipsum**, dolor *sit* amet....
+    
+    Yes, Markdown is supported!
+    
+    
+    * Entry 2	This one's important!
+    Each entry is separated by *two* blank lines.  There's also two blank lines
+    before the first entry.
+
+Cool, huh?
+
+
+How do I use it?
+
+Just put your Starkups in a file, and then open it in the viewer.
+
+You can also make a static HTML file by clicking the Save as HTML button once
+you've opened a file.  There's also a Python script in the source tree at
+`viewer/make-static` that will do it for you.
+
+
+Can you see my stuff?
+
+**No.**  Starkups runs entirely on your computer.  Nothing is sent to my server,
+and you can make sure of that by looking at the source code.
+
+
+Where's the source code?
+
+[Over here.](https://gitlab.com/scottywz/starkups)  It's written in JavaScript
+and released under [the X11 License](https://tldrlegal.com/l/x11).
+
+
+Why's it called "Starkups"?
+
+It's a play on "Starbucks" and "markup".
+
+
+Why "Starbucks"?  I thought you don't drink coffee?
+
+I don't.  It's a long story.
+
+
+Ooh, Material!
+
+Yep :)  [Praise DuARTe!](http://duarte.cf/ "Warning: Auto-playing video")
+   </pre>
+  </div>
+  <script type="text/javascript" src="../bundle.js"></script>
+ </body>
+</html>

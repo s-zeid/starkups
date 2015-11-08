@@ -1,0 +1,26 @@
+#!/bin/sh
+
+dir=`dirname "$0"`; cd "$dir"; dir=`pwd`
+
+echo_status() {
+ local b=$1
+ shift
+ 
+ local s=$@
+ if [ x"$b" = x"0" ]; then
+  printf '\033[0m\033[39m\033[1m\033[32m%s\033[22m\033[0m\n' "$s"
+ else
+  printf '\033[0m\033[39m\033[1m\033[31m%s\033[22m\033[0m\n' "$s"
+ fi
+}
+
+node -e 'require("./starkups.js").test();'
+r=$?
+
+if [ $r -eq 0 ]; then
+ echo_status 0 "Test succeeded." >&2
+else
+ echo_status 1 "Test failed!" >&2
+fi
+
+exit $r
