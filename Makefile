@@ -1,5 +1,5 @@
 all: npm viewer
-.PHONY: npm clean viewer/material
+.PHONY: npm clean viewer
 
 ROOT = .
 BIN = ${ROOT}/node_modules/.bin
