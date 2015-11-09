@@ -2,7 +2,7 @@ html, body, .skp-body pre > p {
  font-family: "Roboto", "Droid Sans", "Arial", "Helvetica", sans-serif;
 }
 
-.skp-heading .mdl-layout__header-row {
+.skp-root > .skp-heading .mdl-layout__header-row {
  padding-left: 40px;
 }
 
@@ -63,8 +63,8 @@ html, body, .skp-body pre > p {
  margin-top: 1em;
 }
 
-.skp-templates {
- display: none;
+.skp-item .skp-heading {
+ align-items: flex-start;
 }
 
 .skp-item.important .skp-heading,
@@ -73,6 +73,7 @@ html, body, .skp-body pre > p {
 }
 
 .skp-slug + .skp-summary > :first-child {
+ display: inline-block;
  padding-left: 2em;
 }
 
@@ -111,6 +112,6 @@ html, body, .skp-body pre > p {
  padding: 0;
 }
 
-.skp-file, .skp-default {
+.skp-templates, .skp-file, .skp-default {
  display: none;
 }
