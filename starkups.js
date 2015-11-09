@@ -240,7 +240,13 @@ var mdToHTML = exports.mdToHTML = function(s) {
 
 
 var autolink = (function() {
- var linker = new autolinker({"stripPrefix": false});
+ var linker = new autolinker({
+  "replaceFn": function(linker, match) {
+   var tag = linker.getTagBuilder().build(match);
+   tag.setInnerHtml(match.getMatchedText());
+   return tag;
+  }
+ });
  return function(s) { return linker.link(s); };
 })();
 
