@@ -25,7 +25,7 @@ html, body, .skp-body pre > p {
 }
 
 @media (max-width: 1024px) {
- .skp-heading .mdl-layout__header-row {
+ .skp-root > .skp-heading .mdl-layout__header-row {
   padding-left: 24px;
  }
  .skp-toolbar .skp-buttons {
