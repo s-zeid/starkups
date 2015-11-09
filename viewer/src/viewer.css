@@ -67,7 +67,8 @@ html, body, .skp-body pre > p {
  display: none;
 }
 
-.skp-item.important .skp-heading {
+.skp-item.important .skp-heading,
+.skp-item.important .skp-heading * {
  font-weight: bold;
 }
 
