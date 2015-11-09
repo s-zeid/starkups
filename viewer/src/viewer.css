@@ -2,17 +2,34 @@ html, body, .skp-body pre > p {
  font-family: "Roboto", "Droid Sans", "Arial", "Helvetica", sans-serif;
 }
 
+.skp-heading .mdl-layout__header-row {
+ padding-left: 40px;
+}
+
 .skp-subtitle {
  font-size: medium;
  display: inline-block;
+}
+
+.skp-toolbar .skp-buttons {
+ margin-right: -24px;
 }
 
 @media (max-width: 839px) {
  .skp-buttons a span {
   display: none;
  }
- .skp-buttons a + a {
-  padding-left: 0;
+ .skp-toolbar .skp-buttons a {
+  padding: 0 8px;
+ }
+}
+
+@media (max-width: 1024px) {
+ .skp-heading .mdl-layout__header-row {
+  padding-left: 24px;
+ }
+ .skp-toolbar .skp-buttons {
+  margin-right: -8px;
  }
 }
 
