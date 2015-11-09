@@ -213,7 +213,7 @@ var Item = exports.Item = function Item(lines) {
 };
 
 
-var Part = exports.part = function Part(data, isMarkdown) {
+var Part = exports.Part = function Part(data, isMarkdown) {
  if (!(this instanceof Part))
   return new Part(data, isMarkdown);
  
