@@ -104,8 +104,8 @@ var StarkupsViewer = exports.StarkupsViewer = function StarkupsViewer(root, doc)
    $$(".skp-scrollable").removeClass("ready");
    $$(".skp-main").empty().removeClass("skp-empty");
    
-   $$(".skp-title").html(pToDiv(starkups.mdToHtml(skp.title)));
-   $$(".skp-subtitle").html(pToDiv(starkups.mdToHtml(skp.subtitle)));
+   $$(".skp-title").html(pToDiv(starkups.mdToHTML(skp.title)));
+   $$(".skp-subtitle").html(pToDiv(starkups.mdToHTML(skp.subtitle)));
    if (typeof(doc) == "object" && !isDefaultFile)
     doc.title = $$(".skp-title").text();
    self.render(n, function(item) {
@@ -155,8 +155,8 @@ var StarkupsViewer = exports.StarkupsViewer = function StarkupsViewer(root, doc)
     var card = cardTemplate.clone(true, true);
     var $$$ = make$(card);
     card.addClass((item.important) ? "important" : "not-important");
-    $$$(".skp-slug").html(pToSpan(starkups.mdToHtml(item.slug)));
-    $$$(".skp-summary").html(pToSpan(starkups.mdToHtml(item.summary)));
+    $$$(".skp-slug").html(pToSpan(starkups.mdToHTML(item.slug)));
+    $$$(".skp-summary").html(pToSpan(starkups.mdToHTML(item.summary)));
     $$$(".skp-body").html(item.bodyToHTML());
     $$$(".skp-body a").each(function() {
      $(this).attr("target", "_blank");

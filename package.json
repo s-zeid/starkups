@@ -1,6 +1,6 @@
 {
   "name": "starkups.js",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Starbucks-inspired journal markup language",
   "main": "starkups.js",
   "directories": {},

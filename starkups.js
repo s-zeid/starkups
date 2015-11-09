@@ -46,7 +46,7 @@ var Starkups = exports.Starkups = function Starkups(s, reverse) {
  this.title = sanitize(heading.shift());
  this.subtitle = sanitize(heading.join("\n"));
  this.subtitle.html = function() {
-  return mdToHtml(this.subtitle);
+  return mdToHTML(this.subtitle);
  };
  
  this.items = null;  // make items come before reset when inspecting
@@ -117,8 +117,8 @@ var Starkups = exports.Starkups = function Starkups(s, reverse) {
  this.renderHeader = function() {
   var result = '';
   result += '<header>\n';
-  result += ' <h1 class="title">' + mdToHtml(this.title) + '</h1>\n'
-  result += ' <h2 class="subtitle">' + mdToHtml(this.subtitle) + '</h2>\n'
+  result += ' <h1 class="title">' + mdToHTML(this.title) + '</h1>\n'
+  result += ' <h2 class="subtitle">' + mdToHTML(this.subtitle) + '</h2>\n'
   result += '</header>';
   return result;
  }
@@ -183,7 +183,7 @@ var Item = exports.Item = function Item(lines) {
   for (var i = 0; i < this.body.length; i++) {
    var part = this.body[i];
    if (part.isMarkdown)
-    result += '\n' + mdToHtml(part.data);
+    result += '\n' + mdToHTML(part.data);
    else {
     result += '\n<pre><p>';  // pre + p to signal the user's intent
     result += stripHTML(part.data)
@@ -199,8 +199,8 @@ var Item = exports.Item = function Item(lines) {
   result += '<section class="' + ((!this.important) ? "not-" : "") + 'important">\n';
   result += ' <header>\n';
   result += '  <h1>\n';
-  result += '   <span class="slug">' + mdToHtml(this.slug) + '</span> \n';
-  result += '   <span class="summary">' + mdToHtml(this.summary) + '</span>\n'
+  result += '   <span class="slug">' + mdToHTML(this.slug) + '</span> \n';
+  result += '   <span class="summary">' + mdToHTML(this.summary) + '</span>\n'
   result += '  </h1>\n';
   result += ' </header>\n';
   result += ' <article>\n';
@@ -234,7 +234,7 @@ var Part = exports.Part = function Part(data, isMarkdown) {
 }
 
 
-var mdToHtml = exports.mdToHtml = function(s) {
+var mdToHTML = exports.mdToHTML = function(s) {
  return autolink(markdown.toHTML(s, "Maruku"));
 };
 
