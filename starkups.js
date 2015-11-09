@@ -186,7 +186,7 @@ var Item = exports.Item = function Item(lines) {
     result += '\n' + mdToHTML(part.data);
    else {
     result += '\n<pre><p>';  // pre + p to signal the user's intent
-    result += stripHTML(part.data)
+    result += autolink(stripHTML(part.data));
     result += '</p></pre>';
    }
   }
