@@ -74,7 +74,7 @@ html, body {
 
 .skp-main .skp-body pre {
  position: relative; left: -0.5em;
- margin-bottom: -0.5em;
+ margin-right: -1em; margin-bottom: -0.5em;
  white-space: pre-wrap;
 }
 
