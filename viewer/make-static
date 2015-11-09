@@ -38,6 +38,20 @@ def html_escape(s, quote=True):
  return s
 
 
+def prepare(skp, name="untitled.skp"):
+ name = os.path.basename(name)
+ 
+ try:
+  html = get_viewer()
+ except IOError as exc:
+  raise IOError("error loading the viewer: " + str(exc))
+ 
+ html = html.replace(STATIC_NAME_PLACEHOLDER, html_escape(name))
+ html = html.replace(STATIC_DATA_PLACEHOLDER, html_escape(skp, False))
+ 
+ return html
+
+
 def main(argv):
  if len(argv) < 2:
   print >> sys.stderr, "Usage: %s <filename|->" % argv[0]
@@ -52,13 +66,10 @@ def main(argv):
    skp = f.read()
  
  try:
-  html = get_viewer()
+  html = prepare(skp, name)
  except IOError as exc:
-  print >> sys.stderr, "error loading the viewer: " + str(exc)
+  print >> sys.stderr, str(exc)
   return 1
- 
- html = html.replace(STATIC_NAME_PLACEHOLDER, html_escape(name))
- html = html.replace(STATIC_DATA_PLACEHOLDER, html_escape(skp, False))
  
  sys.stdout.write(html)
 
