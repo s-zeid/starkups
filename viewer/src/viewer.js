@@ -138,11 +138,14 @@ var StarkupsViewer = exports.StarkupsViewer = function StarkupsViewer(root, doc)
     }
     dlA.attr("href", makeStaticPage(dlData, dlName));
     dlA.attr("download", ((isDefaultFile)?$$(".skp-file").attr("title"):dlName)+".html");
-    if (!isDefaultFile) {
-     setTimeout(function() {  // setTimeout -> HACK HACK HACK (static load didn't scroll)
-      $$(".skp-scrollable").scrollTop($$(".skp-main").innerHeight());
-     }, 500);
-    }
+    setTimeout((function(i) {  // setTimeout -> HACK HACK HACK (static load timing issues)
+     var $$ = i.$$, isDefaultFile = i.isDefaultFile;
+     return function() {
+      if (!isDefaultFile)
+       $$(".skp-scrollable").scrollTop($$(".skp-main").innerHeight());
+      $$(".skp-scrollable")[0].focus();
+     };
+    })({"$$": $$, "isDefaultFile": isDefaultFile}), 250);
     $$(".skp-scrollable").addClass("ready");
    });
   } else {
@@ -231,7 +234,12 @@ function makeStaticPage(data, name) {
  
 
 function make$(el) {
- return function() { return el.find.apply(el, arguments); };
+ return function() {
+  if (arguments.length > 0)
+   return el.find.apply(el, arguments);
+  else
+   return el;
+ };
 };
 
 
