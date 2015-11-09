@@ -247,7 +247,7 @@ function pToDiv(s) {
 
 
 function pToSpan(s) {
- return pToX(s, "div");
+ return pToX(s, "span");
 }
 
 
