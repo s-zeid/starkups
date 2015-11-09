@@ -2,12 +2,30 @@
 
 import os
 import sys
+import urllib2
+
 
 ROOT = os.path.dirname(os.path.realpath(__file__))
-VIEWER = os.path.join(ROOT, "index.html");
+VIEWER_FILE = os.path.join(ROOT, "index.html");
+VIEWER_URL = "http://starkups.s.zeid.me/"
 
 STATIC_NAME_PLACEHOLDER = "__SKP"+"_"+"INSERT_NAME_HERE__"
 STATIC_DATA_PLACEHOLDER = "__SKP"+"_"+"INSERT_DATA_HERE__"
+
+
+def get_viewer():
+ html = ""
+ if os.path.isfile(VIEWER_FILE):
+  with open(VIEWER_FILE, "rb") as f:
+   html = f.read()
+ if STATIC_NAME_PLACEHOLDER in html and STATIC_DATA_PLACEHOLDER in html:
+  return html
+ else:
+  html = urllib2.urlopen(VIEWER_URL).read()
+  if STATIC_NAME_PLACEHOLDER in html and STATIC_DATA_PLACEHOLDER in html:
+   return html
+  else:
+   raise IOError("Downloaded viewer is not a valid Starkups viewer")
 
 
 def html_escape(s, quote=True):
@@ -33,8 +51,11 @@ def main(argv):
   with open(path, "rb") as f:
    skp = f.read()
  
- with open(VIEWER, "rb") as f:
-  html = f.read()
+ try:
+  html = get_viewer()
+ except IOError as exc:
+  print >> sys.stderr, "error loading the viewer: " + str(exc)
+  return 1
  
  html = html.replace(STATIC_NAME_PLACEHOLDER, html_escape(name))
  html = html.replace(STATIC_DATA_PLACEHOLDER, html_escape(skp, False))
