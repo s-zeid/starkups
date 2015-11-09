@@ -12,6 +12,7 @@
   "license": "X11",
   "repository": "bitbucket:scottywz/starkups",
   "dependencies": {
+    "autolinker": "^0.21.0",
     "jquery": "^2.1.4",
     "markdown": "^0.5.0",
     "material-design-lite": "^1.0.6"

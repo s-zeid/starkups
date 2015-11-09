@@ -24,19 +24,17 @@
     of the entry as well as one whitespace character after it.  If a line's
     leader is a vertical pipe, then Markdown is disabled for that line and
     line endings are preserved.
+    
+    Bare URLs will be turned into clickable links.
 */
 
+var autolinker = require("autolinker");
 var markdown = require("markdown").markdown;
 
 
 var ENDLINE = /\r\n|\n|\r/;
 var LEADERS = [":", "|"];
 
-
-var mdToHtml = exports.mdToHtml = function(s) {
- return markdown.toHTML(s, "Maruku");
-};
- 
 
 var Starkups = exports.Starkups = function Starkups(s, reverse) {
  if (!(this instanceof Starkups))
@@ -192,7 +190,8 @@ var Item = exports.Item = function Item(lines) {
     result += '</p></pre>';
    }
   }
-  return result.substr(1);
+  result = result.substr(1);
+  return result;
  }
  
  this.html = function() {
@@ -233,6 +232,17 @@ var Part = exports.Part = function Part(data, isMarkdown) {
   }
  }
 }
+
+
+var mdToHtml = exports.mdToHtml = function(s) {
+ return autolink(markdown.toHTML(s, "Maruku"));
+};
+
+
+var autolink = (function() {
+ var linker = new autolinker({"stripPrefix": false});
+ return function(s) { return linker.link(s); };
+})();
 
 
 function sanitize(input) {
