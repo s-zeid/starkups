@@ -25,6 +25,13 @@ It looks like this:
     * Entry 2	This one's important!
     Each entry is separated by *two* blank lines.  There's also two blank lines
     before the first entry.
+    
+    
+    : Entry 3	But what if you don't want Markdown?
+    | That's fine too.  If the header starts with a `|` or `:`, then
+    | that character will be removed from the beginning of the item's
+    | lines, and each line that starts with a `|` will also have Markdown
+    : *disabled*.
 
 Cool, huh?
 

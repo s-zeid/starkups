@@ -18,12 +18,19 @@
     
     The date and summary line may be split into multiple lines by ending each
     line but the last one with a backslash.
+    
+    If the summary line starts with a colon or vertical pipe, then the first
+    one of those character will be stripped from the beginning of each line
+    of the entry as well as one whitespace character after it.  If a line's
+    leader is a vertical pipe, then Markdown is disabled for that line and
+    line endings are preserved.
 */
 
 var markdown = require("markdown").markdown;
 
 
 var ENDLINE = /\r\n|\n|\r/;
+var LEADERS = [":", "|"];
 
 
 var mdToHtml = exports.mdToHtml = function(s) {
@@ -138,12 +145,55 @@ var Item = exports.Item = function Item(lines) {
  var heading = lines.shift();
  while (heading.substring(heading.length - 1) == "\\")
   heading = heading.substring(0, heading.length - 1) + lines.shift();
- var headingParts = heading.match(/^(\*\s*)?([^\t]*)?\t?(.*)$/).slice(1);
+ var headingParts = heading.match(/^([:|]\s*)?(\*\s*)?([^\t]*)?\t?(.*)$/).slice(1);
  
- this.slug = sanitize(headingParts[1]);
- this.summary = sanitize(headingParts[2]);
- this.important = Boolean(headingParts[0]);
- this.body = sanitize(lines.join("\n"));
+ this.slug = sanitize(headingParts[2]);
+ this.summary = sanitize(headingParts[3]);
+ this.important = Boolean(headingParts[1]);
+ this.body = [];
+
+ var useLeader = Boolean((headingParts[0] || "").replace(/\s/g, ""));
+ if (useLeader) {
+  var part = new Part([]);
+  for (var i = 0; i < lines.length; i++) {
+   var line = lines[i];
+   var leader = line.charAt(0);
+   if (LEADERS.indexOf(leader) > -1)
+    line = line.substr(1).replace(/^\s/, "");
+   else
+    leader = null;
+   if (leader == "|") {
+    if (part.isMarkdown) {
+     part.pushTo(this.body);
+     part = new Part([], false);
+    }
+   } else {
+    if (!part.isMarkdown) {
+     part.pushTo(this.body);
+     part = new Part([], true);
+    }
+   }
+   part.data.push(sanitize(line));
+  }
+  part.pushTo(this.body);
+ } else {
+  new Part(sanitize(lines.join("\n"))).pushTo(this.body);
+ }
+ 
+ this.bodyToHTML = function() {
+  var result = "";
+  for (var i = 0; i < this.body.length; i++) {
+   var part = this.body[i];
+   if (part.isMarkdown)
+    result += '\n' + mdToHtml(part.data);
+   else {
+    result += '\n<pre><p>';  // pre + p to signal the user's intent
+    result += stripHTML(part.data)
+    result += '</p></pre>';
+   }
+  }
+  return result.substr(1);
+ }
  
  this.html = function() {
   var result = "";
@@ -155,12 +205,34 @@ var Item = exports.Item = function Item(lines) {
   result += '  </h1>\n';
   result += ' </header>\n';
   result += ' <article>\n';
-  result += indent(mdToHtml(this.body), 2, true) + "\n";
+  result += indent(this.bodyToHTML(), 2, true) + "\n";
   result += ' </article>\n';
   result += '</section>';
   return result;
  }
 };
+
+
+var Part = exports.part = function Part(data, isMarkdown) {
+ if (!(this instanceof Part))
+  return new Part(data, isMarkdown);
+ 
+ if (data == null) data = "";
+ if (isMarkdown == null) isMarkdown = true;
+ 
+ this.data = data;
+ this.isMarkdown = isMarkdown;
+ 
+ this.pushTo = function(body) {
+  var data = this.data;
+  if (typeof(data) != "string") {
+   data = data.join("\n");
+   body.push(new Part(data, this.isMarkdown));
+  } else {
+   body.push(this);
+  }
+ }
+}
 
 
 function sanitize(input) {
@@ -228,6 +300,11 @@ function lineAt(s, from, reverse) {
 }
 
 
+function stripHTML(html) {
+ return html.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+}
+
+
 var test = exports.test = function test() {
  function s(input, reverse) {
   var skp = new Starkups(input, reverse);
@@ -261,5 +338,5 @@ var test = exports.test = function test() {
  s("Title\nSubtitle\n\n* 1\tOne\na\nb\n\nc\n\n\n2\tTwo\nd\n\ne\nf");
  s("Title\nSubtitle\n\n\n* 1\tOne\na\nb\n\nc\n\n\n2\tTwo\nd\n\ne\nf");
  s("Title\nSubtitle\n\n\n* 1\tOne\na\nb\n\nc\n\n\n2\tTwo\nd\n\ne\n<div>f</div>\n\n"
-   + "    asdf\n    lkjh\n\nyyy\n\n    qwer\n    poiu\n", true);
+   + "    asdf\n    lkjh\n\nyyy\n\n    qwer\n    poiu\n\n\n: Leader test\n:\n\n|\n| \n| 1\n|\n|\n|2\n: 3\n4\n", true);
 };

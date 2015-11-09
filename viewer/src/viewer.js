@@ -153,7 +153,7 @@ var StarkupsViewer = exports.StarkupsViewer = function StarkupsViewer(root, doc)
     card.addClass((item.important) ? "important" : "not-important");
     $$$(".skp-slug").html(pToSpan(starkups.mdToHtml(item.slug)));
     $$$(".skp-summary").html(pToSpan(starkups.mdToHtml(item.summary)));
-    $$$(".skp-body").html(starkups.mdToHtml(item.body));
+    $$$(".skp-body").html(item.bodyToHTML());
     $$$(".skp-body a").each(function() {
      $(this).attr("target", "_blank");
     });
