@@ -55,6 +55,7 @@ html, body {
 }
 
 .skp-body {
+ width: 100%;
  padding-top: 0;
 }
 
@@ -71,8 +72,9 @@ html, body {
  padding: 0.5em;
 }
 
-.skp-body pre {
- position: relative; top: -0.5em; left: -0.5em;
+.skp-main .skp-body pre {
+ position: relative; left: -0.5em;
+ margin-bottom: -0.5em;
  white-space: pre-wrap;
 }
 
