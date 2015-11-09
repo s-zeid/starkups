@@ -83,6 +83,7 @@ var StarkupsViewer = exports.StarkupsViewer = function StarkupsViewer(root, doc)
     readFile(files[0], function(e, info) {
      $$(".skp-file").attr("title", info.name);
      $$(".skp-file").text(info.data);
+     self.isStatic = false;
      self.starkups = null;
      self.render();
     }, "UTF-8");
@@ -111,12 +112,15 @@ var StarkupsViewer = exports.StarkupsViewer = function StarkupsViewer(root, doc)
     $$(".skp-scrollable").scrollTop($$(".skp-main").innerHeight());
    }, function(items) {
     if (!self.isStatic) {
+     $$(".skp-toolbar").show();
      $$(".skp-open").show();
      if (CAN_SAVE_FILES && STATIC_TEMPLATE)
       $$(".skp-save").show();
     } else {
      if (!skp.subtitle)
       $$(".skp-toolbar").hide();
+     else
+      $$(".skp-toolbar").show();
     }
     var dlA = $$(".skp-save"), dlData, dlName;
     if (isDefaultFile) {
@@ -294,8 +298,7 @@ function main() {
    isStatic = true;
  });
  
- if (!isStatic)
-  generateStaticTemplate($(document.head).clone(), $(document.body).clone());
+ generateStaticTemplate($(document.head).clone(), $(document.body).clone());
 
  debug.skp = new StarkupsViewer($(".skp-root"), document);
 }
