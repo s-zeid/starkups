@@ -15,7 +15,7 @@ index.html: src/viewer.html src/viewer.js src/viewer.css \
 	${BIN}/vulcanize --inline-scripts --inline-css $< > $@
 
 bundle.js: src/viewer.js ${ROOT}/starkups.js
-	${BIN}/browserify $< -o $@
+	${BIN}/browserify $< | ${BIN}/uglifyjs - > $@
 
 mdlite: ${LIB}/material-design-lite
 	rm -rf $@
