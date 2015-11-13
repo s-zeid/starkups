@@ -29,6 +29,7 @@
 */
 
 var autolinker = require("autolinker");
+var cheerio = require("cheerio");
 var markdown = require("markdown").markdown;
 
 
@@ -39,6 +40,15 @@ var LEADERS = [":", "|"];
 var Starkups = exports.Starkups = function Starkups(s, reverse) {
  if (!(this instanceof Starkups))
   return new Starkups(s, reverse);
+ 
+ if (s.substr(0, 15).toLowerCase() == "<!doctype html>") {
+  var $ = cheerio.load(s);
+  if ($(".skp-file").length) {
+   var embedded = $(".skp-file").first().text() || "";
+   if (typeof(embedded) == "string" && embedded.length)
+    s = embedded;
+  }
+ }
  
  var mainStart = s.search(/\r\n\r\n\r\n|\n\n\n|\r\r\r/);
  var heading = s.substr(0, mainStart).split(ENDLINE);
