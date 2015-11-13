@@ -152,15 +152,17 @@ var Item = exports.Item = function Item(lines) {
  
  var heading = lines.shift();
  while (heading.substring(heading.length - 1) == "\\")
-  heading = heading.substring(0, heading.length - 1) + lines.shift();
- var headingParts = heading.match(/^([:|]\s*)?(\*\s*)?([^\t]*)?\t?(.*)$/).slice(1);
+  heading = heading.substring(0, heading.length - 1) + "\n" + lines.shift();
+ var headingParts = heading.split("\t");
+ headingParts = [headingParts[0], headingParts.slice(1).join("\t")];
+ headingParts[0] = headingParts[0].match(/^([:|]\s*)?(\*\s*)?(.*)$/).slice(1);
  
- this.slug = sanitize(headingParts[2]);
- this.summary = sanitize(headingParts[3]);
- this.important = Boolean(headingParts[1]);
+ this.slug = sanitize(headingParts[0][2]);
+ this.summary = sanitize(headingParts[1]);
+ this.important = Boolean(headingParts[0][1]);
  this.body = [];
 
- var useLeader = Boolean((headingParts[0] || "").replace(/\s/g, ""));
+ var useLeader = Boolean((headingParts[0][0] || "").replace(/\s/g, ""));
  if (useLeader) {
   var part = new Part([]);
   for (var i = 0; i < lines.length; i++) {
