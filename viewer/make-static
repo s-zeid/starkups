@@ -7,7 +7,7 @@ import urllib2
 
 ROOT = os.path.dirname(os.path.realpath(__file__))
 VIEWER_FILE = os.path.join(ROOT, "index.html");
-VIEWER_URL = "http://starkups.s.zeid.me/"
+VIEWER_URL = "https://starkups.ml/"
 
 STATIC_NAME_PLACEHOLDER = "__SKP"+"_"+"INSERT_NAME_HERE__"
 STATIC_DATA_PLACEHOLDER = "__SKP"+"_"+"INSERT_DATA_HERE__"
