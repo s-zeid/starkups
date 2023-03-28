@@ -1,65 +1,67 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import os
 import sys
-import urllib2
+import urllib.request
 
 
 ROOT = os.path.dirname(os.path.realpath(__file__))
 VIEWER_FILE = os.path.join(ROOT, "index.html");
 VIEWER_URL = "http://starkups.s.zeid.me/"
 
-STATIC_NAME_PLACEHOLDER = "__SKP"+"_"+"INSERT_NAME_HERE__"
-STATIC_DATA_PLACEHOLDER = "__SKP"+"_"+"INSERT_DATA_HERE__"
+STATIC_NAME_PLACEHOLDER = b"__SKP"+b"_"+b"INSERT_NAME_HERE__"
+STATIC_DATA_PLACEHOLDER = b"__SKP"+b"_"+b"INSERT_DATA_HERE__"
 
 
-def get_viewer():
- html = ""
+def get_viewer() -> bytes:
+ html = b""
  if os.path.isfile(VIEWER_FILE):
   with open(VIEWER_FILE, "rb") as f:
    html = f.read()
  if STATIC_NAME_PLACEHOLDER in html and STATIC_DATA_PLACEHOLDER in html:
   return html
  else:
-  html = urllib2.urlopen(VIEWER_URL).read()
+  html = urllib.request.urlopen(VIEWER_URL).read()
   if STATIC_NAME_PLACEHOLDER in html and STATIC_DATA_PLACEHOLDER in html:
    return html
   else:
    raise IOError("Downloaded viewer is not a valid Starkups viewer")
 
 
-def html_escape(s, quote=True):
- s = s.replace("&", "&amp;")
- s = s.replace("<", "&lt;")
- s = s.replace(">", "&gt;")
+def html_escape_bytes(s: bytes, quote: bool = True) -> bytes:
+ s = s.replace(b"&", b"&amp;")
+ s = s.replace(b"<", b"&lt;")
+ s = s.replace(b">", b"&gt;")
  if quote:
-  s = s.replace("'", "&#39;")
-  s = s.replace('"', "&quot;")
+  s = s.replace(b"'", b"&#39;")
+  s = s.replace(b'"', b"&quot;")
  return s
 
 
-def prepare(skp, name="untitled.skp"):
+def prepare(skp: bytes, name: str = "untitled.skp") -> bytes:
  name = os.path.basename(name)
  
  try:
   html = get_viewer()
  except IOError as exc:
-  raise IOError("error loading the viewer: " + str(exc))
+  raise IOError(f"error loading the viewer: {exc}")
  
- html = html.replace(STATIC_NAME_PLACEHOLDER, html_escape(name))
- html = html.replace(STATIC_DATA_PLACEHOLDER, html_escape(skp, False))
+ html = html.replace(STATIC_NAME_PLACEHOLDER, html_escape_bytes(name.encode("utf-8")))
+ html = html.replace(STATIC_DATA_PLACEHOLDER, html_escape_bytes(skp, False))
  
  return html
 
 
-def main(argv):
+def main(argv: list[str]) -> int:
+ prog = os.path.basename(argv[0])
+ 
  if len(argv) < 2:
-  print >> sys.stderr, "Usage: %s <filename|->" % argv[0]
+  print(f"Usage: {prog} <filename|->", file=sys.stderr)
   return 2
  
  path = name = argv[1]
  if path == "-":
-  skp = sys.stdin.read()
+  skp = sys.stdin.buffer.read()
  else:
   name = os.path.basename(path)
   with open(path, "rb") as f:
@@ -68,10 +70,11 @@ def main(argv):
  try:
   html = prepare(skp, name)
  except IOError as exc:
-  print >> sys.stderr, str(exc)
+  print(f"error: {exc}", file=sys.stderr)
   return 1
  
- sys.stdout.write(html)
+ sys.stdout.buffer.write(html)
+ return 0
 
 
 if __name__ == "__main__":
