@@ -4,7 +4,7 @@ Starkups
 A lightweight markup language for journals.  
 <https://starkups.s.zeid.me/>
 
-Copyright (c) 2015 [Scott Zeid](https://s.zeid.me/).  
+Copyright (c) 2015-2023 [S. Zeid](https://s.zeid.me/).  
 Released under [the X11 License](https://tldrlegal.com/l/x11).
 
 
@@ -53,7 +53,7 @@ and you can make sure of that by looking at the source code.
 
 ## Where's the source code?
 
-[Over here.](https://gitlab.com/scottywz/starkups)  It's written in JavaScript
+[Over here.](https://gitlab.com/s-zeid/starkups)  It's written in JavaScript
 and released under [the X11 License](https://tldrlegal.com/l/x11).
 
 
